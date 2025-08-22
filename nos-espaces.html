@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Espaces - Château de Bellefontaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --gold: #d4af37;
+            --light-gold: #f4e4c1;
+            --text: #333;
+            --light: #f8f9fa;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            padding-top: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1570213489059-0aac6626cade?w=1920&h=400&fit=crop') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 50px;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Spaces Grid */
+        .spaces-grid {
+            display: grid;
+            gap: 80px;
+        }
+
+        .space-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .space-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .space-item:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .space-item:nth-child(even) .space-image {
+            order: 2;
+        }
+
+        .space-item:nth-child(even) .space-content {
+            order: 1;
+        }
+
+        .space-image {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .space-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .space-item:hover .space-image img {
+            transform: scale(1.1);
+        }
+
+        .space-content {
+            padding: 40px;
+        }
+
+        .space-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .space-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .space-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .feature-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background: var(--light-gold);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .capacity-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--gold);
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            text-align: center;
+            padding: 80px 50px;
+            margin-top: 80px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: all 0.4s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .space-item {
+                grid-template-columns: 1fr;
+            }
+
+            .space-item:nth-child(even) .space-image {
+                order: 0;
+            }
+
+            .space-item:nth-child(even) .space-content {
+                order: 1;
+            }
+
+            .space-content {
+                padding: 30px 20px;
+            }
+
+            .space-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Château de Bellefontaine</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="nos-espaces.html" class="active">Nos Espaces</a></li>
+                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="prestataires.html">Prestataires</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="reservations.html">Réservations</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Nos Espaces d'Exception</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="intro-text">
+            <p>Le Château de Bellefontaine vous offre une variété d'espaces uniques pour célébrer les moments les plus précieux de votre vie. Chaque salle a été restaurée avec soin pour allier charme historique et confort moderne, créant ainsi le cadre parfait pour votre événement.</p>
+        </div>
+
+        <div class="spaces-grid">
+            <!-- Grande Salle de Réception -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop" alt="Grande Salle de Réception">
+                </div>
+                <div class="space-content">
+                    <h2>Grande Salle de Réception</h2>
+                    <p>Notre majestueuse salle de bal du XVIIIe siècle vous transporte dans l'élégance de l'époque royale. Avec ses lustres en cristal de Baccarat, ses dorures d'époque et ses miroirs monumentaux, elle offre un cadre spectaculaire pour votre réception.</p>
+                    <p>Les hauts plafonds ornés de fresques historiques et le parquet d'origine créent une atmosphère unique qui émerveillera vos invités.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">🎭 Plafonds de 8m</span>
+                        <span class="feature-tag">💡 Éclairage modulable</span>
+                        <span class="feature-tag">🎵 Acoustique parfaite</span>
+                        <span class="feature-tag">🌡️ Climatisation</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 300 personnes</span>
+                </div>
+            </div>
+
+            <!-- Jardins à la Française -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&h=600&fit=crop" alt="Jardins à la Française">
+                </div>
+                <div class="space-content">
+                    <h2>Jardins à la Française</h2>
+                    <p>5 hectares de jardins sculptés selon les plans originaux de Le Nôtre. Des allées bordées de buis centenaires, des fontaines ornementales et des parterres de fleurs créent un décor romantique incomparable.</p>
+                    <p>L'espace parfait pour vos cérémonies en plein air, cocktails champêtres ou dîners sous les étoiles. Un kiosque musical et plusieurs tonnelles offrent des espaces intimes pour vos moments privilégiés.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">🌳 5 hectares</span>
+                        <span class="feature-tag">⛲ 3 fontaines</span>
+                        <span class="feature-tag">🏛️ Kiosque musical</span>
+                        <span class="feature-tag">💐 Roseraie</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 500 personnes</span>
+                </div>
+            </div>
+
+            <!-- Salon Napoléon -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=800&h=600&fit=crop" alt="Salon Napoléon">
+                </div>
+                <div class="space-content">
+                    <h2>Salon Napoléon</h2>
+                    <p>Un salon intimiste qui a conservé ses boiseries d'époque Empire et son mobilier d'origine. Les portraits historiques et la cheminée monumentale en marbre de Carrare créent une atmosphère raffinée et chaleureuse.</p>
+                    <p>Idéal pour vos réunions d'affaires prestigieuses, cérémonies civiles intimes ou cocktails VIP. La bibliothèque attenante peut servir d'espace de réception complémentaire.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">📚 Bibliothèque</span>
+                        <span class="feature-tag">🔥 Cheminée</span>
+                        <span class="feature-tag">🖼️ Œuvres d'art</span>
+                        <span class="feature-tag">☕ Salon privé</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 50 personnes</span>
+                </div>
+            </div>
+
+            <!-- L'Orangerie -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop" alt="L'Orangerie">
+                </div>
+                <div class="space-content">
+                    <h2>L'Orangerie</h2>
+                    <p>Baignée de lumière naturelle grâce à ses immenses verrières, l'Orangerie offre une vue panoramique sur les jardins. Sa structure en fer forgé et verre du XIXe siècle a été entièrement restaurée.</p>
+                    <p>Un espace moderne et lumineux parfait pour vos événements professionnels, lancements de produits ou réceptions contemporaines. La terrasse attenante double la capacité en été.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">☀️ Lumière naturelle</span>
+                        <span class="feature-tag">🌿 Vue jardins</span>
+                        <span class="feature-tag">🏛️ Terrasse</span>
+                        <span class="feature-tag">📡 WiFi haut débit</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 150 personnes</span>
+                </div>
+            </div>
+
+            <!-- Chapelle Privée -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1503023816554-5a7f7c11b8e5?w=800&h=600&fit=crop" alt="Chapelle Privée">
+                </div>
+                <div class="space-content">
+                    <h2>Chapelle Privée</h2>
+                    <p>Une chapelle du XVe siècle miraculeusement préservée, avec ses vitraux d'origine et ses voûtes gothiques. L'acoustique exceptionnelle en fait un lieu privilégié pour les cérémonies religieuses et les concerts privés.</p>
+                    <p>Les fresques murales récemment restaurées et l'autel en marbre blanc créent une atmosphère spirituelle unique. Un orgue historique complète ce lieu d'exception.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">🎼 Orgue historique</span>
+                        <span class="feature-tag">🌈 Vitraux XVe</span>
+                        <span class="feature-tag">🎵 Acoustique parfaite</span>
+                        <span class="feature-tag">💒 Consacrée</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 80 personnes</span>
+                </div>
+            </div>
+
+            <!-- Terrasse Panoramique -->
+            <div class="space-item">
+                <div class="space-image">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&h=600&fit=crop" alt="Terrasse Panoramique">
+                </div>
+                <div class="space-content">
+                    <h2>Terrasse Panoramique</h2>
+                    <p>Perchée sur les toits du château, notre terrasse offre une vue à 360° sur la vallée et les vignobles environnants. Un espace unique pour des moments inoubliables au coucher du soleil.</p>
+                    <p>Équipée d'un bar permanent et d'espaces lounge, elle est l'endroit rêvé pour vos vins d'honneur, soirées d'été ou afterworks exclusifs. Un système de voiles d'ombrage assure le confort par tous les temps.</p>
+                    <div class="space-features">
+                        <span class="feature-tag">🌅 Vue 360°</span>
+                        <span class="feature-tag">🍸 Bar équipé</span>
+                        <span class="feature-tag">🛋️ Espaces lounge</span>
+                        <span class="feature-tag">⛱️ Voiles d'ombrage</span>
+                    </div>
+                    <span class="capacity-badge">Capacité : 200 personnes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Visitez nos espaces</h2>
+        <p style="font-size: 1.2rem;">Organisez une visite privée pour découvrir l'espace parfait pour votre événement</p>
+        <a href="contact.html" class="cta-button">Planifier une visite</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--gold); margin-bottom: 20px;">Château de Bellefontaine</h3>
+            <p>📍 Allée des Marronniers, 78000 Versailles | 📞 +33 1 XX XX XX XX</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGV</a>
+                <a href="#">Politique de Confidentialité</a>
+                <a href="#">Plan du Site</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2024 Château de Bellefontaine - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
