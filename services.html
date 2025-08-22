@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Château de Bellefontaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --gold: #d4af37;
+            --light-gold: #f4e4c1;
+            --text: #333;
+            --light: #f8f9fa;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            padding-top: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1920&h=400&fit=crop') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 50px;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            gap: 60px;
+        }
+
+        .service-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-block:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .service-block:nth-child(even) .service-image {
+            order: 2;
+        }
+
+        .service-block:nth-child(even) .service-content {
+            order: 1;
+        }
+
+        .service-image {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-block:hover .service-image img {
+            transform: scale(1.05);
+        }
+
+        .service-content {
+            padding: 40px;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .service-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .service-features li {
+            padding: 10px 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .service-price {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--light-gold);
+            color: var(--primary);
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Packages Section */
+        .packages-section {
+            background: var(--light);
+            padding: 80px 50px;
+            margin-top: 80px;
+        }
+
+        .packages-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .package-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .package-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .package-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .package-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            text-align: center;
+            padding: 80px 50px;
+            margin-top: 80px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: all 0.4s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .service-block {
+                grid-template-columns: 1fr;
+            }
+
+            .service-block:nth-child(even) .service-image {
+                order: 0;
+            }
+
+            .service-block:nth-child(even) .service-content {
+                order: 1;
+            }
+
+            .service-content {
+                padding: 30px 20px;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Château de Bellefontaine</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="nos-espaces.html">Nos Espaces</a></li>
+                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="prestataires.html">Prestataires</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="reservations.html">Réservations</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Nos Services Premium</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="intro-text">
+            <p>Au Château de Bellefontaine, nous transformons vos rêves en réalité avec une gamme complète de services haut de gamme. Notre équipe dédiée assure une organisation sans faille pour que vous profitiez pleinement de votre événement.</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Wedding Planning -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&h=600&fit=crop" alt="Wedding Planning">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">💍</div>
+                    <h2>Wedding Planning Complet</h2>
+                    <p>Confiez-nous l'organisation complète de votre mariage. Notre équipe d'experts coordonne chaque détail, de la conception à la réalisation, pour créer l'événement qui vous ressemble.</p>
+                    <ul class="service-features">
+                        <li>Planification sur-mesure de A à Z</li>
+                        <li>Coordination avec tous les prestataires</li>
+                        <li>Gestion du jour J avec équipe dédiée</li>
+                        <li>Timeline détaillé et plan B inclus</li>
+                        <li>Assistance administrative complète</li>
+                    </ul>
+                    <span class="service-price">À partir de 3 500€</span>
+                </div>
+            </div>
+
+            <!-- Service Traiteur -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&h=600&fit=crop" alt="Service Traiteur">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">🍽️</div>
+                    <h2>Gastronomie d'Exception</h2>
+                    <p>Nos chefs étoilés créent des menus personnalisés qui subliment votre réception. Une expérience culinaire inoubliable avec les meilleurs produits de saison.</p>
+                    <ul class="service-features">
+                        <li>Menus créés par des chefs étoilés Michelin</li>
+                        <li>Dégustation préalable pour 4 personnes</li>
+                        <li>Options végétariennes et allergies gérées</li>
+                        <li>Cave d'exception avec sommelier</li>
+                        <li>Service à l'assiette ou buffet premium</li>
+                    </ul>
+                    <span class="service-price">80€ à 250€ par personne</span>
+                </div>
+            </div>
+
+            <!-- Hébergement -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop" alt="Hébergement">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">🛏️</div>
+                    <h2>Hébergement de Luxe</h2>
+                    <p>15 suites et chambres luxueuses dans le château pour accueillir vos invités. Un séjour inoubliable dans un cadre historique avec tout le confort moderne.</p>
+                    <ul class="service-features">
+                        <li>Suite nuptiale avec jacuzzi privé</li>
+                        <li>14 chambres de charme décorées</li>
+                        <li>Petit-déjeuner continental inclus</li>
+                        <li>Spa et piscine chauffée accessibles</li>
+                        <li>Service de chambre 24/7</li>
+                    </ul>
+                    <span class="service-price">120€ à 450€ par nuit</span>
+                </div>
+            </div>
+
+            <!-- Décoration -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=800&h=600&fit=crop" alt="Décoration">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">🎨</div>
+                    <h2>Décoration & Scénographie</h2>
+                    <p>Nos décorateurs créent des ambiances sur-mesure qui transforment nos espaces selon vos envies. De l'élégance classique au design contemporain.</p>
+                    <ul class="service-features">
+                        <li>Conception 3D de votre décoration</li>
+                        <li>Éclairage architectural LED</li>
+                        <li>Mobilier design et lounge</li>
+                        <li>Art floral grand format</li>
+                        <li>Thématisation complète des espaces</li>
+                    </ul>
+                    <span class="service-price">À partir de 2 500€</span>
+                </div>
+            </div>
+
+            <!-- Animations -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=600&fit=crop" alt="Animations">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">🎪</div>
+                    <h2>Activités & Animations</h2>
+                    <p>Des animations exclusives pour divertir vos invités tout au long de votre événement. Créez des souvenirs mémorables avec nos activités sur-mesure.</p>
+                    <ul class="service-features">
+                        <li>Visite guidée historique du château</li>
+                        <li>Dégustation de vins dans nos caves</li>
+                        <li>Feu d'artifice privatisé</li>
+                        <li>Animations enfants avec personnel qualifié</li>
+                        <li>Spectacles et artistes sur demande</li>
+                    </ul>
+                    <span class="service-price">Sur devis personnalisé</span>
+                </div>
+            </div>
+
+            <!-- Conciergerie -->
+            <div class="service-block">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop" alt="Conciergerie">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">🎩</div>
+                    <h2>Conciergerie Privée</h2>
+                    <p>Un service personnalisé disponible 24/7 pour répondre à tous vos besoins et ceux de vos invités. L'excellence du service à la française.</p>
+                    <ul class="service-features">
+                        <li>Majordome dédié pendant l'événement</li>
+                        <li>Organisation de transferts VIP</li>
+                        <li>Réservations restaurants et activités</li>
+                        <li>Services beauté et bien-être sur place</li>
+                        <li>Gestion des demandes spéciales</li>
+                    </ul>
+                    <span class="service-price">Inclus dans les formules Prestige</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Packages Section -->
+    <div class="packages-section">
+        <h2>Packages Services Combinés</h2>
+        <div class="packages-grid">
+            <div class="package-card">
+                <div class="package-icon">🥉</div>
+                <h3>Package Bronze</h3>
+                <p>L'essentiel pour votre événement : coordination jour J + service traiteur cocktail + décoration florale basique</p>
+                <div class="package-price">5 000€</div>
+            </div>
+            <div class="package-card">
+                <div class="package-icon">🥈</div>
+                <h3>Package Argent</h3>
+                <p>Formule complète : wedding planning + traiteur gastronomique + décoration premium + photographe 4h</p>
+                <div class="package-price">12 000€</div>
+            </div>
+            <div class="package-card">
+                <div class="package-icon">🥇</div>
+                <h3>Package Or</h3>
+                <p>L'excellence absolue : tous services inclus + hébergement 10 chambres + feu d'artifice + animations</p>
+                <div class="package-price">25 000€</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Créons ensemble votre événement sur-mesure</h2>
+        <p style="font-size: 1.2rem;">Nos experts sont à votre écoute pour composer la formule parfaite</p>
+        <a href="contact.html" class="cta-button">Demander un devis personnalisé</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--gold); margin-bottom: 20px;">Château de Bellefontaine</h3>
+            <p>📍 Allée des Marronniers, 78000 Versailles | 📞 +33 1 XX XX XX XX</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGV</a>
+                <a href="#">Politique de Confidentialité</a>
+                <a href="#">Plan du Site</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2024 Château de Bellefontaine - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
