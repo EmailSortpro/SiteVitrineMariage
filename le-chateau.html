@@ -105,28 +105,30 @@
             transition: 0.3s;
         }
 
-        /* Hero Section */
-        .hero {
-            height: 80vh;
+        /* Page Header */
+        .page-header {
             background: linear-gradient(var(--overlay), var(--overlay)),
-                        url('https://images.unsplash.com/photo-1585159812596-fac104f2f069?w=1920&h=1080&fit=crop') center/cover fixed;
+                        url('https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=1920&h=500&fit=crop') center/cover;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-align: center;
+            position: relative;
         }
 
-        .hero-content h1 {
+        .page-header h1 {
             font-size: 4rem;
-            margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             letter-spacing: 3px;
+            margin-bottom: 20px;
         }
 
-        .hero-content p {
+        .page-header p {
             font-size: 1.5rem;
             opacity: 0.95;
+            letter-spacing: 2px;
         }
 
         /* Main Content */
@@ -155,194 +157,262 @@
         .history-content h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 0;
             width: 80px;
             height: 3px;
             background: var(--gold);
+            bottom: -10px;
+            left: 0;
         }
 
         .history-content p {
             line-height: 1.8;
             color: #666;
             margin-bottom: 20px;
+            text-align: justify;
         }
 
         .history-image {
             position: relative;
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         .history-image img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s;
+        }
+
+        .history-image:hover img {
+            transform: scale(1.05);
         }
 
         /* Timeline */
         .timeline {
-            margin: 100px 0;
             position: relative;
+            padding: 60px 0;
+            background: var(--light);
+            border-radius: 20px;
+            margin: 80px 0;
         }
 
-        .timeline::before {
+        .timeline h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-container::after {
             content: '';
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
+            width: 3px;
             background: var(--gold);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
         }
 
         .timeline-item {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 60px;
+            padding: 10px 40px;
             position: relative;
+            width: 50%;
         }
 
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-right: 50%;
-            padding-right: 60px;
-            text-align: right;
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12.5px;
+            background: white;
+            border: 4px solid var(--gold);
+            top: 15px;
+            border-radius: 50%;
         }
 
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-left: 50%;
-            padding-left: 60px;
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12.5px;
         }
 
         .timeline-content {
-            background: white;
             padding: 30px;
+            background: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 500px;
+            transition: all 0.3s;
         }
 
-        .timeline-date {
-            color: var(--gold);
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
 
         .timeline-content h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
 
-        .timeline-marker {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--gold);
-            border: 4px solid white;
-            border-radius: 50%;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
         }
 
         /* Architecture Section */
         .architecture-section {
-            background: var(--light);
-            padding: 80px 50px;
-            margin: 100px -50px;
+            margin: 100px 0;
+        }
+
+        .architecture-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .architecture-section h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .architecture-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            margin-top: 50px;
+            margin-top: 60px;
         }
 
         .architecture-card {
             background: white;
-            padding: 30px;
             border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
 
         .architecture-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        .architecture-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .architecture-card-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .architecture-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .architecture-card:hover .architecture-card-image img {
+            transform: scale(1.1);
+        }
+
+        .architecture-card-content {
+            padding: 30px;
         }
 
         .architecture-card h3 {
             color: var(--primary);
             margin-bottom: 15px;
+            font-size: 1.5rem;
         }
 
-        /* Gallery Section */
-        .gallery-section {
-            margin: 100px 0;
+        .architecture-card p {
+            color: #666;
+            line-height: 1.6;
         }
 
-        .gallery-section h2 {
+        /* Values Section */
+        .values-section {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            padding: 80px 50px;
+            border-radius: 20px;
+            margin: 80px 0;
+        }
+
+        .values-section h2 {
             text-align: center;
-            color: var(--primary);
             font-size: 2.5rem;
             margin-bottom: 50px;
         }
 
-        .photo-gallery {
+        .values-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .gallery-photo {
-            height: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+        .value-item {
+            text-align: center;
         }
 
-        .gallery-photo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
 
-        .gallery-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .value-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
         }
 
-        .gallery-photo.large {
-            grid-column: span 2;
-            height: 400px;
+        .value-item p {
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
         /* Virtual Tour CTA */
         .virtual-tour {
-            background: linear-gradient(135deg, var(--primary), #34495e);
-            color: white;
-            padding: 80px;
-            border-radius: 25px;
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1555992643-a97955e6aae1?w=1920&h=400&fit=crop') center/cover;
+            padding: 100px 50px;
             text-align: center;
-            margin: 100px 0;
+            color: white;
+            border-radius: 20px;
+            margin: 80px 0;
         }
 
         .virtual-tour h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .virtual-tour p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 30px;
             opacity: 0.95;
         }
@@ -362,34 +432,6 @@
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(212,175,55,0.5);
-        }
-
-        /* Facts & Figures */
-        .facts-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin: 100px 0;
-            text-align: center;
-        }
-
-        .fact-item {
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .fact-number {
-            font-size: 3rem;
-            color: var(--gold);
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .fact-label {
-            color: var(--primary);
-            font-size: 1.1rem;
         }
 
         /* Footer */
@@ -454,7 +496,11 @@
                 display: flex;
             }
 
-            .hero-content h1 {
+            .page-header {
+                height: 300px;
+            }
+
+            .page-header h1 {
                 font-size: 2.5rem;
             }
 
@@ -466,28 +512,30 @@
                 grid-template-columns: 1fr;
             }
 
-            .timeline-item:nth-child(odd) .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                margin: 0;
-                padding: 0 0 0 60px;
-                text-align: left;
+            .timeline-container::after {
+                left: 31px;
             }
 
-            .timeline::before {
-                left: 20px;
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
             }
 
-            .timeline-marker {
-                left: 20px;
+            .timeline-item::after {
+                left: 19px;
             }
 
-            .architecture-section {
-                margin: 50px -20px;
-                padding: 50px 20px;
+            .right {
+                left: 0;
             }
 
-            .gallery-photo.large {
-                grid-column: span 1;
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -504,7 +552,7 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Accueil</a></li>
-                <li><a href="le-chateau.html" class="active">Le Château</a></li>
+                <li><a href="chateau.html" class="active">Château</a></li>
                 <li><a href="nos-espaces.html">Nos Espaces</a></li>
                 <li><a href="tarifs.html">Tarifs</a></li>
                 <li><a href="galerie.html">Galerie</a></li>
@@ -516,11 +564,11 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1>Château de Bellefontaine</h1>
-            <p>Trois siècles d'histoire, un lieu d'exception</p>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h1>Le Château de Bellefontaine</h1>
+            <p>Trois siècles d'histoire et d'élégance</p>
         </div>
     </div>
 
@@ -530,152 +578,157 @@
         <div class="history-section">
             <div class="history-content">
                 <h2>Une Histoire Prestigieuse</h2>
-                <p>Édifié en 1750 sous le règne de Louis XV, le Château de Bellefontaine est un joyau architectural qui a traversé les siècles en conservant son âme et sa splendeur d'origine.</p>
-                <p>Ancienne demeure de la famille de Montmorency, le château a accueilli les plus grandes personnalités de l'histoire de France. De Voltaire à Victor Hugo, en passant par la Marquise de Pompadour, ces murs ont été témoins des plus brillantes conversations et des plus somptueuses réceptions.</p>
-                <p>Aujourd'hui entièrement restauré dans le respect de son patrimoine historique, le château perpétue cette tradition d'excellence en accueillant vos événements les plus précieux.</p>
+                <p>
+                    Érigé en 1750 par le Marquis de Bellefontaine, architecte de Louis XV, notre château incarne l'excellence de l'architecture française du XVIIIe siècle. Construit sur les vestiges d'une forteresse médiévale, il fut conçu comme un lieu de villégiature pour la noblesse de Versailles.
+                </p>
+                <p>
+                    Au fil des siècles, le château a accueilli des personnalités illustres : Marie-Antoinette y organisa des fêtes champêtres, Napoléon y séjourna lors de sa campagne de 1814, et Victor Hugo y écrivit plusieurs chapitres des Misérables lors de ses visites à la Comtesse de Bellefontaine.
+                </p>
+                <p>
+                    Miraculeusement épargné par les tourments de l'Histoire, le château conserve aujourd'hui son mobilier d'origine, ses fresques exceptionnelles et ses jardins dessinés par Le Nôtre. Classé Monument Historique depuis 1923, il perpétue la tradition française de l'art de recevoir.
+                </p>
             </div>
             <div class="history-image">
-                <img src="https://images.unsplash.com/photo-1568535904307-f48b760e39ec?w=800&h=600&fit=crop" alt="Histoire du château">
+                <img src="https://images.unsplash.com/photo-1568535904307-f48b760a39f9?w=800&h=600&fit=crop" alt="Histoire du château">
             </div>
         </div>
 
         <!-- Timeline -->
         <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-date">1750</div>
-                    <h3>Construction du Château</h3>
-                    <p>Édification par l'architecte royal Jacques-Ange Gabriel pour le Comte de Montmorency.</p>
+            <h2>Les Grandes Dates</h2>
+            <div class="timeline-container">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1750</h3>
+                        <p>Construction du château par le Marquis de Bellefontaine sur ordre de Louis XV</p>
+                    </div>
                 </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-date">1789</div>
-                    <h3>Révolution Française</h3>
-                    <p>Le château devient bien national et échappe miraculeusement à la destruction.</p>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1785</h3>
+                        <p>Marie-Antoinette organise la fête des Roses dans les jardins</p>
+                    </div>
                 </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-date">1850</div>
-                    <h3>Âge d'Or</h3>
-                    <p>Sous le Second Empire, le château devient un haut lieu de la vie mondaine parisienne.</p>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1814</h3>
+                        <p>Napoléon établit son quartier général avant la bataille de Paris</p>
+                    </div>
                 </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-date">1920</div>
-                    <h3>Les Années Folles</h3>
-                    <p>Le château accueille les plus grandes fêtes de l'entre-deux-guerres avec des invités prestigieux.</p>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1862</h3>
+                        <p>Victor Hugo séjourne au château et y écrit une partie des Misérables</p>
+                    </div>
                 </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-date">2020</div>
-                    <h3>Renaissance</h3>
-                    <p>Restauration complète et ouverture au public pour des événements d'exception.</p>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1923</h3>
+                        <p>Classement du château aux Monuments Historiques de France</p>
+                    </div>
                 </div>
-                <div class="timeline-marker"></div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>2020</h3>
+                        <p>Restauration complète et ouverture aux événements d'exception</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Architecture Section -->
         <div class="architecture-section">
-            <h2 style="text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 20px;">Architecture & Patrimoine</h2>
-            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto;">Un chef-d'œuvre architectural classé Monument Historique, alliant l'élégance du style Louis XV à des aménagements contemporains discrets.</p>
-            
+            <h2>Architecture & Patrimoine</h2>
             <div class="architecture-grid">
                 <div class="architecture-card">
-                    <div class="architecture-icon">🏛️</div>
-                    <h3>Style Louis XV</h3>
-                    <p>Façades en pierre de taille, toiture en ardoise, symétrie parfaite caractéristique du classicisme français.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1606210122158-eeb10e0823bf?w=600&h=400&fit=crop" alt="Façade principale">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>La Façade Principale</h3>
+                        <p>Style Louis XV avec ses lignes courbes caractéristiques, ornée de sculptures allégoriques représentant les quatre saisons. Les fenêtres à la française offrent une luminosité exceptionnelle.</p>
+                    </div>
                 </div>
                 <div class="architecture-card">
-                    <div class="architecture-icon">🎨</div>
-                    <h3>Décors d'Époque</h3>
-                    <p>Plafonds peints, boiseries dorées, parquets Versailles, cheminées en marbre de Carrare.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1577083165633-14ebcdb0f658?w=600&h=400&fit=crop" alt="Les fresques">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>Les Fresques Murales</h3>
+                        <p>Œuvres de François Boucher, peintre officiel de Madame de Pompadour. Ces fresques mythologiques ornent les plafonds des salons principaux, témoignage unique de l'art rococo.</p>
+                    </div>
                 </div>
                 <div class="architecture-card">
-                    <div class="architecture-icon">🌳</div>
-                    <h3>Jardins à la Française</h3>
-                    <p>20 hectares dessinés par André Le Nôtre, fontaines, bassins, parterres de broderies végétales.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=600&h=400&fit=crop" alt="L'escalier d'honneur">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>L'Escalier d'Honneur</h3>
+                        <p>Chef-d'œuvre de ferronnerie du XVIIIe siècle, cet escalier monumental en pierre de Bourgogne et rampe en fer forgé doré à la feuille constitue le cœur architectural du château.</p>
+                    </div>
                 </div>
                 <div class="architecture-card">
-                    <div class="architecture-icon">💎</div>
-                    <h3>Mobilier d'Exception</h3>
-                    <p>Collection de meubles estampillés, tapisseries d'Aubusson, lustres en cristal de Baccarat.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1584738766473-61c083514bf4?w=600&h=400&fit=crop" alt="La bibliothèque">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>La Bibliothèque Royale</h3>
+                        <p>15 000 ouvrages anciens, dont des manuscrits enluminés du XIIe siècle. Les boiseries en chêne de Hongrie et le plafond peint en font un joyau du patrimoine français.</p>
+                    </div>
                 </div>
                 <div class="architecture-card">
-                    <div class="architecture-icon">🖼️</div>
-                    <h3>Galerie d'Art</h3>
-                    <p>Tableaux de maîtres, sculptures originales, bibliothèque de 10 000 ouvrages anciens.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" alt="Les jardins">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>Les Jardins de Le Nôtre</h3>
+                        <p>20 hectares dessinés par André Le Nôtre, créateur des jardins de Versailles. Parterres de broderie, bosquets, fontaines et perspectives à l'infini composent ce chef-d'œuvre végétal.</p>
+                    </div>
                 </div>
                 <div class="architecture-card">
-                    <div class="architecture-icon">⛪</div>
-                    <h3>Chapelle Privée</h3>
-                    <p>Joyau gothique du XVe siècle avec vitraux d'origine et orgue classé.</p>
+                    <div class="architecture-card-image">
+                        <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=600&h=400&fit=crop" alt="Les caves">
+                    </div>
+                    <div class="architecture-card-content">
+                        <h3>Les Caves Voûtées</h3>
+                        <p>Datant du XIIe siècle, vestiges de l'ancienne forteresse. Aujourd'hui transformées en cave à vins prestigieuse abritant plus de 5000 bouteilles des meilleurs crus français.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Photo Gallery -->
-        <div class="gallery-section">
-            <h2>Découvrez le Domaine en Images</h2>
-            <div class="photo-gallery">
-                <div class="gallery-photo large">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc81?w=800&h=600&fit=crop" alt="Vue aérienne du château">
+        <!-- Values Section -->
+        <div class="values-section">
+            <h2>Nos Valeurs & Engagements</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🏛️</div>
+                    <h3>Patrimoine</h3>
+                    <p>Préservation et valorisation d'un héritage historique exceptionnel pour les générations futures</p>
                 </div>
-                <div class="gallery-photo">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=400&fit=crop" alt="Salon doré">
+                <div class="value-item">
+                    <div class="value-icon">✨</div>
+                    <h3>Excellence</h3>
+                    <p>Un service d'exception et une attention méticuleuse aux détails pour chaque événement</p>
                 </div>
-                <div class="gallery-photo">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=400&fit=crop" alt="Bibliothèque">
+                <div class="value-item">
+                    <div class="value-icon">🌿</div>
+                    <h3>Durabilité</h3>
+                    <p>Engagement écologique avec jardins bio, énergies renouvelables et circuits courts</p>
                 </div>
-                <div class="gallery-photo">
-                    <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=400&fit=crop" alt="Escalier monumental">
+                <div class="value-item">
+                    <div class="value-icon">🎭</div>
+                    <h3>Culture</h3>
+                    <p>Soutien aux artistes locaux et organisation d'événements culturels ouverts au public</p>
                 </div>
-                <div class="gallery-photo">
-                    <img src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?w=400&h=400&fit=crop" alt="Suite royale">
-                </div>
-                <div class="gallery-photo large">
-                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&h=600&fit=crop" alt="Jardins">
-                </div>
-            </div>
-        </div>
-
-        <!-- Facts & Figures -->
-        <div class="facts-section">
-            <div class="fact-item">
-                <div class="fact-number">1750</div>
-                <div class="fact-label">Année de construction</div>
-            </div>
-            <div class="fact-item">
-                <div class="fact-number">20</div>
-                <div class="fact-label">Hectares de jardins</div>
-            </div>
-            <div class="fact-item">
-                <div class="fact-number">45</div>
-                <div class="fact-label">Pièces de réception</div>
-            </div>
-            <div class="fact-item">
-                <div class="fact-number">15</div>
-                <div class="fact-label">Suites & chambres</div>
-            </div>
-            <div class="fact-item">
-                <div class="fact-number">500</div>
-                <div class="fact-label">Capacité maximale</div>
             </div>
         </div>
 
         <!-- Virtual Tour CTA -->
         <div class="virtual-tour">
-            <h2>Visite Virtuelle 360°</h2>
-            <p>Explorez le château depuis chez vous grâce à notre visite virtuelle immersive</p>
-            <a href="#" class="cta-button">Commencer la visite</a>
+            <h2>Découvrez le Château en 360°</h2>
+            <p>Visitez virtuellement nos espaces depuis chez vous</p>
+            <a href="#" class="cta-button">Lancer la visite virtuelle</a>
         </div>
     </div>
 
