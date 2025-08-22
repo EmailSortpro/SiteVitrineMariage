@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestataires - Château de Bellefontaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --gold: #d4af37;
+            --light-gold: #f4e4c1;
+            --text: #333;
+            --light: #f8f9fa;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            padding-top: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=1920&h=400&fit=crop') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 50px;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Partners Grid */
+        .partners-categories {
+            display: grid;
+            gap: 80px;
+        }
+
+        .partner-category {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .category-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .category-header p {
+            opacity: 0.9;
+        }
+
+        .partners-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .partner-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: white;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .partner-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .partner-card .specialty {
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .partner-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .partner-contact {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-btn {
+            padding: 8px 20px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+        }
+
+        /* Why Our Partners */
+        .why-partners {
+            background: linear-gradient(135deg, var(--light-gold), white);
+            padding: 80px 50px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .why-partners h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-item h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .partners-list {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Château de Bellefontaine</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="nos-espaces.html">Nos Espaces</a></li>
+                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="prestataires.html" class="active">Prestataires</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="reservations.html">Réservations</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Nos Prestataires Partenaires</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="intro-text">
+            <p>Nous avons sélectionné pour vous les meilleurs professionnels de la région. Chaque partenaire partage nos valeurs d'excellence et de service personnalisé pour faire de votre événement une réussite totale.</p>
+        </div>
+
+        <div class="partners-categories">
+            <!-- Gastronomie -->
+            <div class="partner-category">
+                <div class="category-header">
+                    <h2>🍽️ Gastronomie & Traiteurs</h2>
+                    <p>Des chefs étoilés pour sublimer votre réception</p>
+                </div>
+                <div class="partners-list">
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop" alt="L'Étoile d'Or">
+                        </div>
+                        <h3>L'Étoile d'Or</h3>
+                        <p class="specialty">Cuisine gastronomique française</p>
+                        <p>Chef étoilé Michelin, spécialiste des grands événements. Menu sur-mesure avec produits locaux et de saison.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=300&fit=crop" alt="Saveurs du Monde">
+                        </div>
+                        <h3>Saveurs du Monde</h3>
+                        <p class="specialty">Cuisine internationale fusion</p>
+                        <p>Voyagez à travers les continents avec des menus créatifs et originaux. Spécialiste des buffets thématiques.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=300&h=300&fit=crop" alt="Bio & Terroir">
+                        </div>
+                        <h3>Bio & Terroir</h3>
+                        <p class="specialty">Cuisine bio et locale</p>
+                        <p>100% bio, 100% local. Une approche éco-responsable de la haute gastronomie pour vos événements.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photographie -->
+            <div class="partner-category">
+                <div class="category-header">
+                    <h2>📸 Photographie & Vidéo</h2>
+                    <p>Immortalisez chaque instant précieux</p>
+                </div>
+                <div class="partners-list">
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?w=300&h=300&fit=crop" alt="Studio Lumière">
+                        </div>
+                        <h3>Studio Lumière</h3>
+                        <p class="specialty">Photographie artistique</p>
+                        <p>Reportages photos haut de gamme. Style documentaire et artistique, albums personnalisés premium.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=300&h=300&fit=crop" alt="Cinémagic">
+                        </div>
+                        <h3>Cinémagic Productions</h3>
+                        <p class="specialty">Vidéo cinématographique</p>
+                        <p>Films de mariage cinématographiques, drone 4K, montage créatif. Votre histoire comme au cinéma.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=300&h=300&fit=crop" alt="Instant Magique">
+                        </div>
+                        <h3>Instant Magique</h3>
+                        <p class="specialty">Photo & vidéo 360°</p>
+                        <p>Technologies innovantes : photos 360°, réalité virtuelle, photobooth premium, impressions instantanées.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fleuristes -->
+            <div class="partner-category">
+                <div class="category-header">
+                    <h2>🌸 Fleuristes & Décoration</h2>
+                    <p>Créez une ambiance florale unique</p>
+                </div>
+                <div class="partners-list">
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=300&h=300&fit=crop" alt="Fleurs de Prestige">
+                        </div>
+                        <h3>Fleurs de Prestige</h3>
+                        <p class="specialty">Compositions florales luxe</p>
+                        <p>Créations florales haute couture. Scénographies végétales spectaculaires pour événements d'exception.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1525169651820-5b3bafbc6c19?w=300&h=300&fit=crop" alt="Garden Party">
+                        </div>
+                        <h3>Garden Party</h3>
+                        <p class="specialty">Décoration champêtre chic</p>
+                        <p>Spécialiste du style bohème et champêtre. Arches florales, suspensions végétales, jardins éphémères.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=300&h=300&fit=crop" alt="Art Floral">
+                        </div>
+                        <h3>Art Floral Moderne</h3>
+                        <p class="specialty">Design floral contemporain</p>
+                        <p>Approche artistique et moderne de l'art floral. Installations monumentales et designs avant-gardistes.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animation -->
+            <div class="partner-category">
+                <div class="category-header">
+                    <h2>🎵 Animation Musicale</h2>
+                    <p>L'ambiance parfaite pour votre événement</p>
+                </div>
+                <div class="partners-list">
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop" alt="Orchestra Royale">
+                        </div>
+                        <h3>Orchestra Royale</h3>
+                        <p class="specialty">Orchestre symphonique</p>
+                        <p>25 musiciens professionnels pour une soirée grandiose. Répertoire classique et moderne.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1571266028243-d220c6a43ce2?w=300&h=300&fit=crop" alt="DJ Premium">
+                        </div>
+                        <h3>DJ Premium Events</h3>
+                        <p class="specialty">DJ & animations</p>
+                        <p>DJs professionnels, son et lumières haut de gamme. Animations interactives et playlists sur-mesure.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://images.unsplash.com/photo-1508854710579-5cecc3a9ff17?w=300&h=300&fit=crop" alt="Jazz Quartet">
+                        </div>
+                        <h3>Jazz Quartet Élégance</h3>
+                        <p class="specialty">Jazz & musique lounge</p>
+                        <p>Quartet de jazz professionnel pour cocktails et dîners. Ambiance feutrée et sophistiquée garantie.</p>
+                        <div class="partner-contact">
+                            <a href="#" class="contact-btn">Contacter</a>
+                            <a href="#" class="contact-btn">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Our Partners -->
+    <div class="why-partners">
+        <h2>Pourquoi nos partenaires ?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon">⭐</div>
+                <h3>Sélection rigoureuse</h3>
+                <p>Chaque partenaire est choisi pour son excellence et son professionnalisme</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🤝</div>
+                <h3>Collaboration étroite</h3>
+                <p>Nos partenaires connaissent parfaitement nos espaces et nos exigences</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <h3>Tarifs négociés</h3>
+                <p>Bénéficiez de tarifs préférentiels grâce à nos partenariats privilégiés</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">✓</div>
+                <h3>Qualité garantie</h3>
+                <p>100% de satisfaction client avec nos prestataires recommandés</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--gold); margin-bottom: 20px;">Château de Bellefontaine</h3>
+            <p>📍 Allée des Marronniers, 78000 Versailles | 📞 +33 1 XX XX XX XX</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGV</a>
+                <a href="#">Politique de Confidentialité</a>
+                <a href="#">Plan du Site</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2024 Château de Bellefontaine - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
