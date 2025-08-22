@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Château - Château de Bellefontaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --gold: #d4af37;
+            --light-gold: #f4e4c1;
+            --text: #333;
+            --light: #f8f9fa;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            padding-top: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1585159812596-fac104f2f069?w=1920&h=1080&fit=crop') center/cover fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 50px;
+        }
+
+        /* History Section */
+        .history-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .history-content h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .history-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .history-content p {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .history-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .history-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin: 100px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--gold);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 50%;
+            padding-right: 60px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 50%;
+            padding-left: 60px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+
+        .timeline-date {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            background: var(--light);
+            padding: 80px 50px;
+            margin: 100px -50px;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .architecture-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .architecture-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .architecture-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .architecture-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin: 100px 0;
+        }
+
+        .gallery-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-photo {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .gallery-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .gallery-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-photo.large {
+            grid-column: span 2;
+            height: 400px;
+        }
+
+        /* Virtual Tour CTA */
+        .virtual-tour {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            padding: 80px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 100px 0;
+        }
+
+        .virtual-tour h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .virtual-tour p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: all 0.4s;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+        }
+
+        /* Facts & Figures */
+        .facts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 100px 0;
+            text-align: center;
+        }
+
+        .fact-item {
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .fact-number {
+            font-size: 3rem;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .fact-label {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .history-section {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin: 0;
+                padding: 0 0 0 60px;
+                text-align: left;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-marker {
+                left: 20px;
+            }
+
+            .architecture-section {
+                margin: 50px -20px;
+                padding: 50px 20px;
+            }
+
+            .gallery-photo.large {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Château de Bellefontaine</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="le-chateau.html" class="active">Le Château</a></li>
+                <li><a href="nos-espaces.html">Nos Espaces</a></li>
+                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="prestataires.html">Prestataires</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="reservations.html">Réservations</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Château de Bellefontaine</h1>
+            <p>Trois siècles d'histoire, un lieu d'exception</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- History Section -->
+        <div class="history-section">
+            <div class="history-content">
+                <h2>Une Histoire Prestigieuse</h2>
+                <p>Édifié en 1750 sous le règne de Louis XV, le Château de Bellefontaine est un joyau architectural qui a traversé les siècles en conservant son âme et sa splendeur d'origine.</p>
+                <p>Ancienne demeure de la famille de Montmorency, le château a accueilli les plus grandes personnalités de l'histoire de France. De Voltaire à Victor Hugo, en passant par la Marquise de Pompadour, ces murs ont été témoins des plus brillantes conversations et des plus somptueuses réceptions.</p>
+                <p>Aujourd'hui entièrement restauré dans le respect de son patrimoine historique, le château perpétue cette tradition d'excellence en accueillant vos événements les plus précieux.</p>
+            </div>
+            <div class="history-image">
+                <img src="https://images.unsplash.com/photo-1568535904307-f48b760e39ec?w=800&h=600&fit=crop" alt="Histoire du château">
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">1750</div>
+                    <h3>Construction du Château</h3>
+                    <p>Édification par l'architecte royal Jacques-Ange Gabriel pour le Comte de Montmorency.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">1789</div>
+                    <h3>Révolution Française</h3>
+                    <p>Le château devient bien national et échappe miraculeusement à la destruction.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">1850</div>
+                    <h3>Âge d'Or</h3>
+                    <p>Sous le Second Empire, le château devient un haut lieu de la vie mondaine parisienne.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">1920</div>
+                    <h3>Les Années Folles</h3>
+                    <p>Le château accueille les plus grandes fêtes de l'entre-deux-guerres avec des invités prestigieux.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2020</div>
+                    <h3>Renaissance</h3>
+                    <p>Restauration complète et ouverture au public pour des événements d'exception.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+
+        <!-- Architecture Section -->
+        <div class="architecture-section">
+            <h2 style="text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 20px;">Architecture & Patrimoine</h2>
+            <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto;">Un chef-d'œuvre architectural classé Monument Historique, alliant l'élégance du style Louis XV à des aménagements contemporains discrets.</p>
+            
+            <div class="architecture-grid">
+                <div class="architecture-card">
+                    <div class="architecture-icon">🏛️</div>
+                    <h3>Style Louis XV</h3>
+                    <p>Façades en pierre de taille, toiture en ardoise, symétrie parfaite caractéristique du classicisme français.</p>
+                </div>
+                <div class="architecture-card">
+                    <div class="architecture-icon">🎨</div>
+                    <h3>Décors d'Époque</h3>
+                    <p>Plafonds peints, boiseries dorées, parquets Versailles, cheminées en marbre de Carrare.</p>
+                </div>
+                <div class="architecture-card">
+                    <div class="architecture-icon">🌳</div>
+                    <h3>Jardins à la Française</h3>
+                    <p>20 hectares dessinés par André Le Nôtre, fontaines, bassins, parterres de broderies végétales.</p>
+                </div>
+                <div class="architecture-card">
+                    <div class="architecture-icon">💎</div>
+                    <h3>Mobilier d'Exception</h3>
+                    <p>Collection de meubles estampillés, tapisseries d'Aubusson, lustres en cristal de Baccarat.</p>
+                </div>
+                <div class="architecture-card">
+                    <div class="architecture-icon">🖼️</div>
+                    <h3>Galerie d'Art</h3>
+                    <p>Tableaux de maîtres, sculptures originales, bibliothèque de 10 000 ouvrages anciens.</p>
+                </div>
+                <div class="architecture-card">
+                    <div class="architecture-icon">⛪</div>
+                    <h3>Chapelle Privée</h3>
+                    <p>Joyau gothique du XVe siècle avec vitraux d'origine et orgue classé.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="gallery-section">
+            <h2>Découvrez le Domaine en Images</h2>
+            <div class="photo-gallery">
+                <div class="gallery-photo large">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc81?w=800&h=600&fit=crop" alt="Vue aérienne du château">
+                </div>
+                <div class="gallery-photo">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=400&fit=crop" alt="Salon doré">
+                </div>
+                <div class="gallery-photo">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=400&fit=crop" alt="Bibliothèque">
+                </div>
+                <div class="gallery-photo">
+                    <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=400&fit=crop" alt="Escalier monumental">
+                </div>
+                <div class="gallery-photo">
+                    <img src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?w=400&h=400&fit=crop" alt="Suite royale">
+                </div>
+                <div class="gallery-photo large">
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&h=600&fit=crop" alt="Jardins">
+                </div>
+            </div>
+        </div>
+
+        <!-- Facts & Figures -->
+        <div class="facts-section">
+            <div class="fact-item">
+                <div class="fact-number">1750</div>
+                <div class="fact-label">Année de construction</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">20</div>
+                <div class="fact-label">Hectares de jardins</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">45</div>
+                <div class="fact-label">Pièces de réception</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">15</div>
+                <div class="fact-label">Suites & chambres</div>
+            </div>
+            <div class="fact-item">
+                <div class="fact-number">500</div>
+                <div class="fact-label">Capacité maximale</div>
+            </div>
+        </div>
+
+        <!-- Virtual Tour CTA -->
+        <div class="virtual-tour">
+            <h2>Visite Virtuelle 360°</h2>
+            <p>Explorez le château depuis chez vous grâce à notre visite virtuelle immersive</p>
+            <a href="#" class="cta-button">Commencer la visite</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--gold); margin-bottom: 20px;">Château de Bellefontaine</h3>
+            <p>📍 Allée des Marronniers, 78000 Versailles | 📞 +33 1 XX XX XX XX</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGV</a>
+                <a href="#">Politique de Confidentialité</a>
+                <a href="#">Plan du Site</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2024 Château de Bellefontaine - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
