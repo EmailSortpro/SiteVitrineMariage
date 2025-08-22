@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Château de Bellefontaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --gold: #d4af37;
+            --light-gold: #f4e4c1;
+            --text: #333;
+            --light: #f8f9fa;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            padding-top: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                        url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&h=400&fit=crop') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 50px;
+        }
+
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .form-header p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .info-card a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .info-card a:hover {
+            color: var(--primary);
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-top: 80px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .map-container {
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1569163139394-de4798aa62b6?w=1920&h=500&fit=crop') center/cover;
+            position: relative;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .map-overlay h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .map-overlay p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .directions-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .directions-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-top: 80px;
+            background: var(--light);
+            padding: 60px;
+            border-radius: 20px;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .faq-item h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .faq-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Social Media */
+        .social-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .social-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212,175,55,0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Château de Bellefontaine</a>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="nos-espaces.html">Nos Espaces</a></li>
+                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="prestataires.html">Prestataires</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="reservations.html">Réservations</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Contactez-Nous</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <div class="form-header">
+                    <h2>Envoyez-nous un message</h2>
+                    <p>Notre équipe est à votre écoute pour créer ensemble l'événement qui vous ressemble. Nous vous répondrons dans les 24 heures.</p>
+                </div>
+
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prénom *</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nom *</label>
+                            <input type="text" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone *</label>
+                            <input type="tel" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type d'événement</label>
+                        <select>
+                            <option>Mariage</option>
+                            <option>Réception privée</option>
+                            <option>Événement d'entreprise</option>
+                            <option>Séminaire</option>
+                            <option>Visite du domaine</option>
+                            <option>Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date prévue</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre d'invités</label>
+                            <input type="number" placeholder="Approximatif">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Votre message *</label>
+                        <textarea rows="6" placeholder="Décrivez-nous votre projet, vos envies, vos questions..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; font-weight: normal;">
+                            <input type="checkbox" style="width: auto; margin-right: 10px;" required>
+                            J'accepte que mes données soient utilisées pour traiter ma demande
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Envoyer ma demande</button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3>📍 Adresse</h3>
+                    <p>
+                        Château de Bellefontaine<br>
+                        Allée des Marronniers<br>
+                        78000 Versailles<br>
+                        France
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>📞 Téléphone</h3>
+                    <p>
+                        <strong>Standard :</strong><br>
+                        <a href="tel:+33100000000">+33 1 XX XX XX XX</a><br><br>
+                        <strong>Réservations :</strong><br>
+                        <a href="tel:+33100000001">+33 1 XX XX XX X1</a>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>✉️ Email</h3>
+                    <p>
+                        <strong>Général :</strong><br>
+                        <a href="mailto:contact@chateau-bellefontaine.fr">contact@chateau-bellefontaine.fr</a><br><br>
+                        <strong>Événements :</strong><br>
+                        <a href="mailto:events@chateau-bellefontaine.fr">events@chateau-bellefontaine.fr</a>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🕒 Horaires</h3>
+                    <p>
+                        <strong>Bureau :</strong><br>
+                        Lun-Ven : 9h00 - 18h00<br>
+                        Sam : 10h00 - 17h00<br><br>
+                        <strong>Visites :</strong><br>
+                        Sur rendez-vous uniquement
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+            <div class="map-container">
+                <div class="map-overlay">
+                    <h3>Comment nous trouver</h3>
+                    <p>À seulement 30 minutes de Paris<br>Parking gratuit sur place</p>
+                    <a href="https://maps.google.com" target="_blank" class="directions-btn">Obtenir l'itinéraire</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Questions Fréquentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Comment planifier une visite du château ?</h4>
+                    <p>Les visites se font uniquement sur rendez-vous. Contactez-nous par téléphone ou via le formulaire pour organiser votre visite personnalisée.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Combien de temps à l'avance faut-il réserver ?</h4>
+                    <p>Nous recommandons de réserver 6 à 12 mois à l'avance pour les mariages, et 2 à 3 mois pour les événements corporate.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Proposez-vous des forfaits tout compris ?</h4>
+                    <p>Oui, nous proposons plusieurs formules incluant location, traiteur, décoration et services. Consultez notre page Tarifs pour plus de détails.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Le château est-il accessible aux personnes à mobilité réduite ?</h4>
+                    <p>Oui, tous nos espaces principaux sont accessibles aux PMR avec rampes d'accès et ascenseurs disponibles.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Peut-on organiser une cérémonie religieuse ?</h4>
+                    <p>Notre chapelle privée consacrée peut accueillir des cérémonies religieuses catholiques. Pour d'autres confessions, contactez-nous.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Y a-t-il un hébergement sur place ?</h4>
+                    <p>Oui, nous disposons de 15 chambres et suites luxueuses pouvant accueillir jusqu'à 30 personnes directement au château.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="social-section">
+            <h3>Suivez-nous sur les réseaux sociaux</h3>
+            <p style="color: #666;">Découvrez nos derniers événements et actualités</p>
+            <div class="social-links">
+                <a href="#" class="social-link">f</a>
+                <a href="#" class="social-link">📷</a>
+                <a href="#" class="social-link">in</a>
+                <a href="#" class="social-link">📍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--gold); margin-bottom: 20px;">Château de Bellefontaine</h3>
+            <p>📍 Allée des Marronniers, 78000 Versailles | 📞 +33 1 XX XX XX XX</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGV</a>
+                <a href="#">Politique de Confidentialité</a>
+                <a href="#">Plan du Site</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2024 Château de Bellefontaine - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Set minimum date for date input
+        window.onload = function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) {
+                dateInput.min = today;
+            }
+        }
+    </script>
+</body>
+</html>
