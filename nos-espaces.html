@@ -145,14 +145,11 @@
         /* Spaces Grid */
         .spaces-grid {
             display: grid;
-            gap: 80px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
 
         .space-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
             background: white;
             border-radius: 20px;
             overflow: hidden;
@@ -162,22 +159,11 @@
 
         .space-item:hover {
             transform: translateY(-5px);
-        }
-
-        .space-item:nth-child(even) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .space-item:nth-child(even) .space-image {
-            order: 2;
-        }
-
-        .space-item:nth-child(even) .space-content {
-            order: 1;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
         .space-image {
-            height: 400px;
+            height: 300px;
             overflow: hidden;
         }
 
@@ -193,13 +179,13 @@
         }
 
         .space-content {
-            padding: 40px;
+            padding: 30px;
         }
 
         .space-content h2 {
             color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
         .space-content p {
@@ -338,14 +324,6 @@
 
             .space-item {
                 grid-template-columns: 1fr;
-            }
-
-            .space-item:nth-child(even) .space-image {
-                order: 0;
-            }
-
-            .space-item:nth-child(even) .space-content {
-                order: 1;
             }
 
             .space-content {
