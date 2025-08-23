@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Espaces - Château de Bellefontaine</title>
+    <title>Tarifs - Château de Bellefontaine</title>
     <style>
         * {
             margin: 0;
@@ -24,6 +24,7 @@
             font-family: 'Georgia', serif;
             color: var(--text);
             padding-top: 80px;
+            background: #fafafa;
         }
 
         /* Navigation */
@@ -108,8 +109,8 @@
         /* Page Header */
         .page-header {
             background: linear-gradient(var(--overlay), var(--overlay)),
-                        url('https://images.unsplash.com/photo-1570213489059-0aac6626cade?w=1920&h=400&fit=crop') center/cover;
-            height: 300px;
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc31?w=1920&h=400&fit=crop') center/cover;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -121,9 +122,15 @@
             font-size: 3.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             letter-spacing: 3px;
+            margin-bottom: 20px;
         }
 
-        /* Main Content */
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -142,129 +149,286 @@
             color: #666;
         }
 
-        /* Spaces Grid */
-        .spaces-grid {
+        /* Pricing Cards */
+        .pricing-cards {
             display: grid;
-            gap: 80px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
         }
 
-        .space-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+        .pricing-card {
             background: white;
             border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .space-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .space-item:nth-child(even) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .space-item:nth-child(even) .space-image {
-            order: 2;
-        }
-
-        .space-item:nth-child(even) .space-content {
-            order: 1;
-        }
-
-        .space-image {
-            height: 400px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+            position: relative;
             overflow: hidden;
         }
 
-        .space-image img {
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--light-gold));
         }
 
-        .space-item:hover .space-image img {
-            transform: scale(1.1);
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
-        .space-content {
-            padding: 40px;
+        .pricing-card.featured {
+            border: 2px solid var(--gold);
+            transform: scale(1.05);
         }
 
-        .space-content h2 {
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .space-content p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .space-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 25px 0;
-        }
-
-        .feature-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 15px;
-            background: var(--light-gold);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .capacity-badge {
-            display: inline-block;
-            padding: 10px 20px;
+        .pricing-card.featured::after {
+            content: 'POPULAIRE';
+            position: absolute;
+            top: 20px;
+            right: -30px;
             background: var(--gold);
             color: white;
-            border-radius: 25px;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
             font-weight: bold;
-            margin-top: 20px;
         }
 
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary), #34495e);
-            color: white;
-            text-align: center;
-            padding: 80px 50px;
-            margin-top: 80px;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
             margin-bottom: 20px;
+        }
+
+        .pricing-subtitle {
+            color: #999;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: var(--gold);
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 15px 40px;
-            background: var(--gold);
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--gold), #b8941f);
             color: white;
             text-decoration: none;
-            font-size: 1.1rem;
             border-radius: 30px;
-            transition: all 0.4s;
-            margin-top: 20px;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 1rem;
         }
 
         .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212,175,55,0.4);
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin-bottom: 80px;
+        }
+
+        .comparison-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: normal;
+        }
+
+        th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--light);
+        }
+
+        .check {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        /* Additional Services */
+        .services-section {
+            background: linear-gradient(135deg, var(--light), white);
+            padding: 80px;
+            border-radius: 20px;
+            margin-bottom: 80px;
+        }
+
+        .services-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-item h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .service-item p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .service-price {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            padding: 60px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-white-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: var(--gold);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .cta-white-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         /* Footer */
@@ -273,6 +437,7 @@
             color: white;
             padding: 50px;
             text-align: center;
+            margin-top: 100px;
         }
 
         .footer-content {
@@ -336,24 +501,32 @@
                 padding: 50px 20px;
             }
 
-            .space-item {
+            .pricing-cards {
                 grid-template-columns: 1fr;
             }
 
-            .space-item:nth-child(even) .space-image {
-                order: 0;
+            .pricing-card.featured {
+                transform: scale(1);
             }
 
-            .space-item:nth-child(even) .space-content {
-                order: 1;
-            }
-
-            .space-content {
+            .comparison-section {
                 padding: 30px 20px;
             }
 
-            .space-content h2 {
-                font-size: 1.5rem;
+            .services-section {
+                padding: 50px 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
             }
         }
     </style>
@@ -371,8 +544,8 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="chateau.html">Château</a></li>
-                <li><a href="nos-espaces.html" class="active">Nos Espaces</a></li>
-                <li><a href="tarifs.html">Tarifs</a></li>
+                <li><a href="nos-espaces.html">Nos Espaces</a></li>
+                <li><a href="tarifs.html" class="active">Tarifs</a></li>
                 <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="prestataires.html">Prestataires</a></li>
                 <li><a href="services.html">Services</a></li>
@@ -384,137 +557,224 @@
 
     <!-- Page Header -->
     <div class="page-header">
-        <h1>Nos Espaces d'Exception</h1>
+        <div>
+            <h1>Nos Formules Tarifaires</h1>
+            <p>Des solutions adaptées à chaque événement</p>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="container">
         <div class="intro-text">
-            <p>Le Château de Bellefontaine vous offre une variété d'espaces uniques pour célébrer les moments les plus précieux de votre vie. Chaque salle a été restaurée avec soin pour allier charme historique et confort moderne, créant ainsi le cadre parfait pour votre événement.</p>
+            <p>Des formules pensées pour s'adapter à tous vos événements, du mariage intime à la grande réception d'entreprise. Chaque formule inclut l'accès exclusif aux espaces, notre service conciergerie et une équipe dédiée pour faire de votre événement un moment inoubliable.</p>
         </div>
 
-        <div class="spaces-grid">
-            <!-- Grande Salle de Réception -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop" alt="Grande Salle de Réception">
-                </div>
-                <div class="space-content">
-                    <h2>Grande Salle de Réception</h2>
-                    <p>Notre majestueuse salle de bal du XVIIIe siècle vous transporte dans l'élégance de l'époque royale. Avec ses lustres en cristal de Baccarat, ses dorures d'époque et ses miroirs monumentaux, elle offre un cadre spectaculaire pour votre réception.</p>
-                    <p>Les hauts plafonds ornés de fresques historiques et le parquet d'origine créent une atmosphère unique qui émerveillera vos invités.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">🎭 Plafonds de 8m</span>
-                        <span class="feature-tag">💡 Éclairage modulable</span>
-                        <span class="feature-tag">🎵 Acoustique parfaite</span>
-                        <span class="feature-tag">🌡️ Climatisation</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 300 personnes</span>
-                </div>
+        <!-- Pricing Cards -->
+        <div class="pricing-cards">
+            <!-- Formule Essentiel -->
+            <div class="pricing-card">
+                <h3>Formule Essentiel</h3>
+                <p class="pricing-subtitle">Pour les événements intimes</p>
+                <div class="price">3 500€<span>/jour</span></div>
+                <ul class="features">
+                    <li>Salon Napoléon ou Chapelle</li>
+                    <li>Jusqu'à 80 invités</li>
+                    <li>6 heures de location</li>
+                    <li>Mobilier et vaisselle inclus</li>
+                    <li>Parking privé 50 places</li>
+                    <li>Coordination événement</li>
+                    <li>Vestiaire surveillé</li>
+                    <li>Nettoyage inclus</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Demander un devis</a>
             </div>
 
-            <!-- Jardins à la Française -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&h=600&fit=crop" alt="Jardins à la Française">
-                </div>
-                <div class="space-content">
-                    <h2>Jardins à la Française</h2>
-                    <p>5 hectares de jardins sculptés selon les plans originaux de Le Nôtre. Des allées bordées de buis centenaires, des fontaines ornementales et des parterres de fleurs créent un décor romantique incomparable.</p>
-                    <p>L'espace parfait pour vos cérémonies en plein air, cocktails champêtres ou dîners sous les étoiles. Un kiosque musical et plusieurs tonnelles offrent des espaces intimes pour vos moments privilégiés.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">🌳 5 hectares</span>
-                        <span class="feature-tag">⛲ 3 fontaines</span>
-                        <span class="feature-tag">🏛️ Kiosque musical</span>
-                        <span class="feature-tag">💐 Roseraie</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 500 personnes</span>
-                </div>
+            <!-- Formule Prestige -->
+            <div class="pricing-card featured">
+                <h3>Formule Prestige</h3>
+                <p class="pricing-subtitle">Notre best-seller</p>
+                <div class="price">7 500€<span>/jour</span></div>
+                <ul class="features">
+                    <li>Grande Salle + Jardins</li>
+                    <li>Jusqu'à 300 invités</li>
+                    <li>12 heures de location</li>
+                    <li>Décoration florale basique</li>
+                    <li>Suite nuptiale offerte</li>
+                    <li>Service voiturier</li>
+                    <li>Éclairage événementiel</li>
+                    <li>Photographe 2h offert</li>
+                    <li>Champagne de bienvenue</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Demander un devis</a>
             </div>
 
-            <!-- Salon Napoléon -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=800&h=600&fit=crop" alt="Salon Napoléon">
-                </div>
-                <div class="space-content">
-                    <h2>Salon Napoléon</h2>
-                    <p>Un salon intimiste qui a conservé ses boiseries d'époque Empire et son mobilier d'origine. Les portraits historiques et la cheminée monumentale en marbre de Carrare créent une atmosphère raffinée et chaleureuse.</p>
-                    <p>Idéal pour vos réunions d'affaires prestigieuses, cérémonies civiles intimes ou cocktails VIP. La bibliothèque attenante peut servir d'espace de réception complémentaire.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">📚 Bibliothèque</span>
-                        <span class="feature-tag">🔥 Cheminée</span>
-                        <span class="feature-tag">🖼️ Œuvres d'art</span>
-                        <span class="feature-tag">☕ Salon privé</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 50 personnes</span>
-                </div>
+            <!-- Formule Excellence -->
+            <div class="pricing-card">
+                <h3>Formule Excellence</h3>
+                <p class="pricing-subtitle">L'expérience ultime</p>
+                <div class="price">12 000€<span>/weekend</span></div>
+                <ul class="features">
+                    <li>Domaine privatisé complet</li>
+                    <li>Jusqu'à 500 invités</li>
+                    <li>3 jours / 2 nuits</li>
+                    <li>10 chambres d'hôtes incluses</li>
+                    <li>Brunch du lendemain inclus</li>
+                    <li>Wedding planner dédié</li>
+                    <li>Feu d'artifice privé</li>
+                    <li>DJ professionnel inclus</li>
+                    <li>Décoration premium</li>
+                    <li>Bar à cocktails 4h</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Demander un devis</a>
             </div>
+        </div>
 
-            <!-- L'Orangerie -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop" alt="L'Orangerie">
-                </div>
-                <div class="space-content">
-                    <h2>L'Orangerie</h2>
-                    <p>Baignée de lumière naturelle grâce à ses immenses verrières, l'Orangerie offre une vue panoramique sur les jardins. Sa structure en fer forgé et verre du XIXe siècle a été entièrement restaurée.</p>
-                    <p>Un espace moderne et lumineux parfait pour vos événements professionnels, lancements de produits ou réceptions contemporaines. La terrasse attenante double la capacité en été.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">☀️ Lumière naturelle</span>
-                        <span class="feature-tag">🌿 Vue jardins</span>
-                        <span class="feature-tag">🏛️ Terrasse</span>
-                        <span class="feature-tag">📡 WiFi haut débit</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 150 personnes</span>
-                </div>
+        <!-- Comparison Table -->
+        <div class="comparison-section">
+            <h2>Comparatif des Formules</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Services inclus</th>
+                            <th>Essentiel</th>
+                            <th>Prestige</th>
+                            <th>Excellence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Espaces de réception</td>
+                            <td>1 espace</td>
+                            <td>2 espaces</td>
+                            <td>Domaine complet</td>
+                        </tr>
+                        <tr>
+                            <td>Durée de location</td>
+                            <td>6 heures</td>
+                            <td>12 heures</td>
+                            <td>3 jours</td>
+                        </tr>
+                        <tr>
+                            <td>Capacité maximale</td>
+                            <td>80 personnes</td>
+                            <td>300 personnes</td>
+                            <td>500 personnes</td>
+                        </tr>
+                        <tr>
+                            <td>Hébergement</td>
+                            <td><span class="cross">✗</span></td>
+                            <td>Suite nuptiale</td>
+                            <td>10 chambres</td>
+                        </tr>
+                        <tr>
+                            <td>Coordination événement</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Wedding planner</td>
+                            <td><span class="cross">✗</span></td>
+                            <td><span class="cross">✗</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Décoration</td>
+                            <td><span class="cross">✗</span></td>
+                            <td>Basique</td>
+                            <td>Premium</td>
+                        </tr>
+                        <tr>
+                            <td>Animations incluses</td>
+                            <td><span class="cross">✗</span></td>
+                            <td>Photo 2h</td>
+                            <td>DJ + Feu d'artifice</td>
+                        </tr>
+                        <tr>
+                            <td>Service voiturier</td>
+                            <td><span class="cross">✗</span></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Brunch du lendemain</td>
+                            <td><span class="cross">✗</span></td>
+                            <td><span class="cross">✗</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <!-- Chapelle Privée -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1503023816554-5a7f7c11b8e5?w=800&h=600&fit=crop" alt="Chapelle Privée">
+        <!-- Additional Services -->
+        <div class="services-section">
+            <h2>Services Additionnels</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">🛏️</div>
+                    <h4>Chambres supplémentaires</h4>
+                    <p>15 chambres disponibles</p>
+                    <div class="service-price">À partir de 120€/nuit</div>
                 </div>
-                <div class="space-content">
-                    <h2>Chapelle Privée</h2>
-                    <p>Une chapelle du XVe siècle miraculeusement préservée, avec ses vitraux d'origine et ses voûtes gothiques. L'acoustique exceptionnelle en fait un lieu privilégié pour les cérémonies religieuses et les concerts privés.</p>
-                    <p>Les fresques murales récemment restaurées et l'autel en marbre blanc créent une atmosphère spirituelle unique. Un orgue historique complète ce lieu d'exception.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">🎼 Orgue historique</span>
-                        <span class="feature-tag">🌈 Vitraux XVe</span>
-                        <span class="feature-tag">🎵 Acoustique parfaite</span>
-                        <span class="feature-tag">💒 Consacrée</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 80 personnes</span>
+                <div class="service-item">
+                    <div class="service-icon">🍽️</div>
+                    <h4>Service traiteur</h4>
+                    <p>Menu gastronomique personnalisé</p>
+                    <div class="service-price">80€ à 250€/personne</div>
                 </div>
-            </div>
-
-            <!-- Terrasse Panoramique -->
-            <div class="space-item">
-                <div class="space-image">
-                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&h=600&fit=crop" alt="Terrasse Panoramique">
+                <div class="service-item">
+                    <div class="service-icon">🌸</div>
+                    <h4>Décoration florale</h4>
+                    <p>Créations sur-mesure</p>
+                    <div class="service-price">À partir de 1 500€</div>
                 </div>
-                <div class="space-content">
-                    <h2>Terrasse Panoramique</h2>
-                    <p>Perchée sur les toits du château, notre terrasse offre une vue à 360° sur la vallée et les vignobles environnants. Un espace unique pour des moments inoubliables au coucher du soleil.</p>
-                    <p>Équipée d'un bar permanent et d'espaces lounge, elle est l'endroit rêvé pour vos vins d'honneur, soirées d'été ou afterworks exclusifs. Un système de voiles d'ombrage assure le confort par tous les temps.</p>
-                    <div class="space-features">
-                        <span class="feature-tag">🌅 Vue 360°</span>
-                        <span class="feature-tag">🍸 Bar équipé</span>
-                        <span class="feature-tag">🛋️ Espaces lounge</span>
-                        <span class="feature-tag">⛱️ Voiles d'ombrage</span>
-                    </div>
-                    <span class="capacity-badge">Capacité : 200 personnes</span>
+                <div class="service-item">
+                    <div class="service-icon">📸</div>
+                    <h4>Photographe/Vidéaste</h4>
+                    <p>Reportage professionnel</p>
+                    <div class="service-price">À partir de 1 200€</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🎵</div>
+                    <h4>Animation musicale</h4>
+                    <p>DJ ou orchestre live</p>
+                    <div class="service-price">À partir de 800€</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🎆</div>
+                    <h4>Feu d'artifice</h4>
+                    <p>Spectacle pyrotechnique privé</p>
+                    <div class="service-price">À partir de 2 500€</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🚁</div>
+                    <h4>Hélicoptère</h4>
+                    <p>Arrivée spectaculaire</p>
+                    <div class="service-price">Sur devis</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🍾</div>
+                    <h4>Bar à champagne</h4>
+                    <p>Sélection premium</p>
+                    <div class="service-price">À partir de 1 000€</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🎭</div>
+                    <h4>Animations</h4>
+                    <p>Magicien, caricaturiste...</p>
+                    <div class="service-price">À partir de 500€</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- CTA Section -->
-    <div class="cta-section">
-        <h2>Visitez nos espaces</h2>
-        <p style="font-size: 1.2rem;">Organisez une visite privée pour découvrir l'espace parfait pour votre événement</p>
-        <a href="contact.html" class="cta-button">Planifier une visite</a>
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3>Devis Personnalisé</h3>
+            <p>Chaque événement est unique. Contactez-nous pour créer une formule sur-mesure adaptée à vos besoins et votre budget.</p>
+            <a href="contact.html" class="cta-white-button">Obtenir un devis gratuit</a>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -537,6 +797,17 @@
             const navMenu = document.getElementById('navMenu');
             navMenu.classList.toggle('active');
         }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!nav.contains(event.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
