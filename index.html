@@ -27,46 +27,6 @@
             padding-top: 80px;
         }
 
-        /* Loading Screen Animation */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeOut 3s forwards;
-            animation-delay: 2s;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: white;
-            animation: pulseGold 1.5s infinite;
-        }
-
-        .loading-content h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            letter-spacing: 5px;
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        @keyframes pulseGold {
-            0%, 100% { color: white; }
-            50% { color: var(--gold); }
-        }
-
         /* Navigation */
         header {
             position: fixed;
@@ -76,14 +36,6 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             z-index: 1000;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
         }
 
         nav {
@@ -166,30 +118,9 @@
             color: white;
             text-align: center;
             position: relative;
-            animation: fadeIn 1.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .hero-content {
-            animation: heroReveal 1.5s;
-        }
-
-        @keyframes heroReveal {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .hero h1 {
+        .hero-content h1 {
             font-size: 4rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -395,11 +326,11 @@
                 height: calc(100vh - 70px);
             }
 
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 2.5rem;
             }
 
-            .hero p {
+            .hero-content p {
                 font-size: 1.2rem;
             }
 
@@ -414,22 +345,10 @@
             .about-grid {
                 grid-template-columns: 1fr;
             }
-
-            .loading-content h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="loading-content">
-            <h1>CHÂTEAU DE BELLEFONTAINE</h1>
-            <p>Un lieu d'exception vous attend...</p>
-        </div>
-    </div>
-
     <!-- Navigation -->
     <header>
         <nav>
